@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "be074a23f80f4767",
+        "id": "db07ef5bc9ff29cf",
         "type": "tabs",
         "children": [
           {
-            "id": "10be076b2d2d6940",
+            "id": "c8c99fc4415e06eb",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -18,21 +18,8 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "c00969a86667eda7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "README.md.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -98,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md.md",
+                "file": "Astro/GettingStarted.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "README.md.md",
+                "file": "Astro/GettingStarted.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "README.md.md"
+                "file": "Astro/GettingStarted.md"
               }
             }
           }
@@ -146,11 +133,13 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
-  "active": "c00969a86667eda7",
+  "active": "e4b3026d3444905a",
   "lastOpenFiles": [
-    "Astro/GettingStarted.md"
+    "content-focused.md",
+    "Astro/GettingStarted.md",
+    "Astro.md",
+    "README.md.md"
   ]
 }

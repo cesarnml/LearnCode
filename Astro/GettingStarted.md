@@ -1,1 +1,8 @@
-- [[Astro]] is an **all-in-one web framework** for building fast, content-focused websites. 
+- [[Astro]] is an **all-in-one web framework** for building fast, [[content-focused]] websites.
+- Features:
+  - [[Component Islands]]
+  - [[Server-first API design]]
+  - [[Zero JS, by default]]
+  - [[Edge-ready]]
+  - [[Customizable]]
+  - [[UI-agnostic]]
