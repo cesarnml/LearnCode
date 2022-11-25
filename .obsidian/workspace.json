@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "f2992b483f0e7cd0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Astro/Blog.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Astro/GettingStarted.md",
+                "file": "Astro/Blog.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Astro/GettingStarted.md",
+                "file": "Astro/Blog.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Astro/GettingStarted.md"
+                "file": "Astro/Blog.md"
               }
             }
           }
@@ -135,10 +148,10 @@
     "direction": "horizontal",
     "width": 300
   },
-  "active": "e4b3026d3444905a",
+  "active": "f2992b483f0e7cd0",
   "lastOpenFiles": [
-    "content-focused.md",
     "Astro/GettingStarted.md",
+    "content-focused.md",
     "Astro.md",
     "README.md.md"
   ]

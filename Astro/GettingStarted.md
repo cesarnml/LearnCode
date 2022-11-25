@@ -14,6 +14,13 @@
 
 ## Start Here Notes
 
+- Create a new `Astro` project via the automated CLI using `pnpm`
+
+```bash
+# create a new project with pnpm
+pnpm create astro@latest
+```
+
 - Setup `tsconfig.json`. [strictest](https://github.com/withastro/astro/tree/main/packages/astro/tsconfigs) is best - imo
 
 ```json
@@ -121,4 +128,33 @@ module.exports = {
     }
   }
 }
+```
+
+- Fix bug with `import` being a reserve keyword lint error by:
+  - In `.eslintrc.cjs`
+
+```js
+  parserOptions: {
+    sourceType: "module",
+    ecmaVersion: "latest"
+},
+```
+
+- Change mdx syntax highlighting theme via `astro.config.mjs`
+  - Add to `defineConfig`
+
+```js
+ markdown: {
+        shikiConfig: {
+          // Choose from Shiki's built-in themes (or add your own)
+          // https://github.com/shikijs/shiki/blob/main/docs/themes.md
+          theme: 'material-palenight',
+          // Add custom languages
+          // Note: Shiki has countless langs built-in, including .astro!
+          // https://github.com/shikijs/shiki/blob/main/docs/languages.md
+          langs: [],
+          // Enable word wrap to prevent horizontal scrolling
+          wrap: true,
+        },
+      },
 ```
