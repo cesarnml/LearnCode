@@ -45,7 +45,7 @@
 
 ### [[Fully-featured, but flexible]]
 
-- _Astro is an all-in-one web framework that comes with eerything you need to build a website_
+- _Astro is an all-in-one web framework that comes with everything you need to build a website_
 - Includes:
   - component syntax (`.astro`)
   - file-based routing
@@ -58,4 +58,14 @@
 
 ## MPA vs SPA
 
+- _Astro is a Multi-Page Application (MPA)_
+- Multi-Page Application [[MPA]] is a website consisting of multiple HTML pages, mostly rendered on a server.
+- Single-Page Application [[SPA]] is a website consisting of a single JavaScript application that loads in a user's browser and renders HTML locally.
+- [[MPA]]s have better SEO and first page-load speeds, but suffer from clunky navigation across pages
+  - Hotwire's [Turbo](https://turbo.hotwired.dev/) - can be used to mimic smooth pae transitions that is available on client-side routing [[SPA]]
+- _Astro prioritizes the performance and simplicity of MPAs because it makes the most sense for our usecase of content-focused websites. More stateful, interaction-heavy websites may benefit more from the app-like architecture that SPAs bring at the expense of first-load performance_
+- [Surma and Jake on SPAs vs MPAs](https://www.youtube.com/watch?v=ivLhf3hq7eM)
+
 ## Astro Islands
+
+- [Preact creator Jason Miller on Island Architecture](https://jasonformat.com/islands-architecture/)
