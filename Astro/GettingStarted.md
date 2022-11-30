@@ -122,10 +122,14 @@ module.exports = {
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@pages/*": ["src/pages/*"]
-    }
+		"@components/*": ["src/components/*"],
+		"@layouts/*": ["src/layouts/*"],
+		"@pages/*": ["src/pages/*"],
+		"@styles/*": ["src/styles/*"],
+		"@scripts/*": ["src/scripts/*"]
+    },
+    "jsx": "react-jsx",
+	"jsxImportSource": "preact"
   }
 }
 ```

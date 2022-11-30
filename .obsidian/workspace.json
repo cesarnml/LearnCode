@@ -27,6 +27,7 @@
               "state": {
                 "file": "Astro/Blog.md",
                 "mode": "source",
+                "backlinks": true,
                 "source": false
               }
             }
@@ -151,6 +152,8 @@
   "active": "f2992b483f0e7cd0",
   "lastOpenFiles": [
     "Astro/GettingStarted.md",
+    "Astro/Blog.md",
+    "2022-11-30.md",
     "content-focused.md",
     "Astro.md",
     "README.md.md"
