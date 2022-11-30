@@ -13,27 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Astro/CoreConcepts.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "0fefaedcac470895",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
                 "file": "Astro/Basics.md",
                 "mode": "source",
-                "backlinks": true,
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -149,13 +135,15 @@
     "direction": "horizontal",
     "width": 300
   },
-  "active": "e4b3026d3444905a",
+  "active": "c8c99fc4415e06eb",
   "lastOpenFiles": [
+    "Astro components.md",
+    "Astro/Basics.md",
+    "Astro/Blog.md",
     "Astro/CoreConcepts.md",
     "Astro/GettingStarted.md",
     "Server-first.md",
     "content-focused.md",
-    "Astro/Blog.md",
     "Astro.md",
     "2022-11-30.md",
     "README.md.md"
