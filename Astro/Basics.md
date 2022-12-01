@@ -166,6 +166,7 @@ const { greeting = "Hello", name } = Astro.props;
 - *The `<slot/>` element is placeholder for external HTML content, allowing child elements from other files to be injected into a layout component template*
 
 #### Named Slots
+
 ```js
 // Wrapper
 <div>
@@ -193,7 +194,11 @@ const { greeting = "Hello", name } = Astro.props;
 ### Client-Side Scripts
 
 - Can be used to add event listeners, send analytics data, play animations, etc.
+
 ## Pages
+
+- [[Pages]] are files that live in the `src/pages/` directory. The are responsible for handling routing, data loading, and overall page layout
+- Custom 404 Error Page: `404.astro` or `404.md` within `/src/pages/`
 
 ## Layouts
 
