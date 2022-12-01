@@ -34,7 +34,15 @@
     - [Dynamic Page Routing on MD/MDX files](#dynamic-page-routing-on-mdmdx-files)
     - [Syntax Highlighting](#syntax-highlighting)
   - [Routing](#routing)
-    - [Static Routes](#static-routes)
+    - [Dynamic Routes](#dynamic-routes)
+      - [Static (SSG) Mode](#static-ssg-mode)
+      - [Rest parameter in Dynamic Routes](#rest-parameter-in-dynamic-routes)
+    - [Server (SSR) Mode](#server-ssr-mode)
+    - [Route Priority Order](#route-priority-order)
+    - [Pagination](#pagination)
+      - [Page Interface](#page-interface)
+        - [Nested Pagination Example](#nested-pagination-example)
+    - [Excluding pages](#excluding-pages)
   - [Imports](#imports)
   - [Endpoints](#endpoints)
   - [Data Fetching](#data-fetching)
@@ -83,7 +91,7 @@
 - [[Astro components]] are HTML-only templating components with no client-side runtime.
 - [[Astro components]] syntax is a superset of HTML. Adds support for including components and JavaScript expressions
 - [[Astro components]] _render to HTML during your build._ Zero JavaScript footprint added by default
-- [[Astro components]] have two main parts. A *Component Script* and the *Component Template*
+- [[Astro components]] have two main parts. A _Component Script_ and the _Component Template_
 
 ```js
 ---
@@ -106,7 +114,7 @@
   - Special [[Astro directives]]
   - Use of any values defined in the [[Component Script]]
 
-> Dynamic values used in Astro components are not *reactive*. Astro components are templates that only run once - at build time!
+> Dynamic values used in Astro components are not _reactive_. Astro components are templates that only run once - at build time!
 
 - Any valid JS expression can be inserted into the Component Template via curly braces syntax
 
@@ -119,7 +127,7 @@ const name = "Astro";
 </div>
 ```
 
-> *WARNING*: Interpolated HTML attributes in Astro components will be converted to strings (i.e. cannot pass functions or objects to HTML element attributes)
+> _WARNING_: Interpolated HTML attributes in Astro components will be converted to strings (i.e. cannot pass functions or objects to HTML element attributes)
 
 - For example, the example below won't work!
 
@@ -149,7 +157,7 @@ const htmlString = '<p>Raw HTML content</p>';
 <Fragment set:html={htmlString} />
 ```
 
-> *NOTE:* Fragments must be used when using JS expressions to dynamically generate multiple html elements
+> _NOTE:_ Fragments must be used when using JS expressions to dynamically generate multiple html elements
 
 ### Differences between Astro and JSX
 
@@ -175,7 +183,7 @@ const { greeting = "Hello", name } = Astro.props;
 
 ### Slots
 
-- *The `<slot/>` element is placeholder for external HTML content, allowing child elements from other files to be injected into a layout component template*
+- _The `<slot/>` element is placeholder for external HTML content, allowing child elements from other files to be injected into a layout component template_
 
 #### Named Slots
 
@@ -197,7 +205,7 @@ const { greeting = "Hello", name } = Astro.props;
 <p slot="bottom">Buy me a coffee. Renders at bottom slot</p>
 ```
 
-- Any explicit children passed to a slot within its Layout component will be used as fallback render  if nothing is passed to a slot
+- Any explicit children passed to a slot within its Layout component will be used as fallback render if nothing is passed to a slot
 
 ### CSS Styles
 
@@ -219,8 +227,8 @@ const { greeting = "Hello", name } = Astro.props;
 
 - [[Layouts]] are [[Astro components]] used to provide a reusable UI structure
 - A typical "layout" component provides
-    1. a page shell (`<html>`, `<head>`, `<body>` tags)
-    2. a `<slot />` to specify where individual page content should be injected
+  1. a page shell (`<html>`, `<head>`, `<body>` tags)
+  2. a `<slot />` to specify where individual page content should be injected
 - By convention, layout components live in `src/layouts`
 
 ### MD/MDX `layout` frontmatter property
@@ -241,10 +249,10 @@ The `layout` property is the only special one provided by Astro.
 You can use it in both Markdown and MDX files located within `src/pages/`.
 ```
 
-> *TIP:* Wrap `layout` path in quotes to enable file path aliases
+> _TIP:_ Wrap `layout` path in quotes to enable file path aliases
 
 ```js
-layout: "@layouts/MarkdownPostLayout.astro"
+layout: '@layouts/MarkdownPostLayout.astro'
 ```
 
 - Use `MarkdownLayoutProps` or `MDXLayoutProps` TS utility types to type incoming frontmatter props
@@ -286,7 +294,7 @@ const { frontmatter, url } = Astro.props;
 - `type Heading = { depth: number, slug: string, text: string }`
 - (MD only) `rawContent()` and `compiledContext()` functions
 
-> *NOTE:* `export` statements in MDX are not available on `Astro.props` for Layout components
+> _NOTE:_ `export` statements in MDX are not available on `Astro.props` for Layout components
 
 ### Manual importing of Layout components
 
@@ -309,10 +317,10 @@ function fancyJsHelper() {
 </BaseLayout>
 ```
 
-> *TIP:* Conditional destructing is a thing:
+> _TIP:_ Conditional destructing is a thing:
 
 ```js
-const { title } = Astro.props.frontmatter || Astro.props;
+const { title } = Astro.props.frontmatter || Astro.props
 ```
 
 ## Markdown And MDX
@@ -324,11 +332,11 @@ const { title } = Astro.props.frontmatter || Astro.props;
     - page exclude from the site build
     - page will be returned by `Astro.glob()` invocations
 
-> *TIP:* Filter out draft md/mdx pages using JavaScript
+> _TIP:_ Filter out draft md/mdx pages using JavaScript
 
 ```js
-const posts = await Astro.glob('../pages/post/*.md');
-const nonDraftPosts = posts.filter((post) => !post.frontmatter.draft);
+const posts = await Astro.glob('../pages/post/*.md')
+const nonDraftPosts = posts.filter((post) => !post.frontmatter.draft)
 ```
 
 ### MD/MDX Heading anchors
@@ -345,14 +353,14 @@ I can link internally to [my conclusion](#conclusion) on the same page when writ
 
 ## Conclusion
 
-I can use the URL `https://my-domain.com/page-1/#introduction` to navigate directly to my Introduction on the page. 
+I can use the URL `https://my-domain.com/page-1/#introduction` to navigate directly to my Introduction on the page.
 ```
 
 ### MDX Features
 
 - MDX integration allows for JS variables, expressions, and components to be used in mdx file
 - MDX files have access to any `export` named properties, frontmatter properties, and imported Astro/UI-framework components
-- MDX syntax can be mapped to custom components 
+- MDX syntax can be mapped to custom components
   - e.g. `# Heading => <MyCustomHeadingComponent/>`
   - Don't forget to use `<slot/>` within the custom component!
 
@@ -397,7 +405,7 @@ const posts = await Astro.glob<Frontmatter>('../pages/post/*.md');
 ---
 ```
 
-> *NOTE:* Astro "layout" components don't receive named exports from mdx files, whereas "non-layout" `.astro` components do receive named exports
+> _NOTE:_ Astro "layout" components don't receive named exports from mdx files, whereas "non-layout" `.astro` components do receive named exports
 
 ### MD/MDX Content Component
 
@@ -425,7 +433,7 @@ import Heading from '../Heading.astro';
 
 ### Dynamic Page Routing on MD/MDX files
 
-- Dynamic page routing of md/mdx  files
+- Dynamic page routing of md/mdx files
 
 ```js
 // src/pages/[slug].astro
@@ -434,8 +442,8 @@ export async function getStaticPaths() {
   const posts = await Astro.glob('../posts/**/*.md')
 
   return posts.map(post => ({
-    params: { 
-      slug: post.frontmatter.slug 
+    params: {
+      slug: post.frontmatter.slug
     },
     props: {
       post
@@ -450,16 +458,16 @@ const { Content } = Astro.props.post
 </article>
 ```
 
-> *NOTE:* `remark` is used by Astro to parse md/mdx files using GitHub-flavored Markdown and Smartypants plugins by default
+> _NOTE:_ `remark` is used by Astro to parse md/mdx files using GitHub-flavored Markdown and Smartypants plugins by default
 
-- [[GitHub Flavored Markdown]] - This package is a unified (remark) plugin to enable the extensions to markdown that GitHub adds: autolink literals (www.x.com), footnotes ([^1]), strikethrough (~~stuff~~), tables (| cell |…), and tasklists (* [x]). You can use this plugin to add support for parsing and serializing them. These extensions by GitHub to CommonMark are called GFM (GitHub Flavored Markdown).
+- [[GitHub Flavored Markdown]] - This package is a unified (remark) plugin to enable the extensions to markdown that GitHub adds: autolink literals (www.x.com), footnotes ([^1]), strikethrough (~~stuff~~), tables (| cell |…), and tasklists (\* [x]). You can use this plugin to add support for parsing and serializing them. These extensions by GitHub to CommonMark are called GFM (GitHub Flavored Markdown).
 
 - Extending MD/MDX parsing via plugins
 
 ```js
-import { defineConfig } from 'astro/config';
-import remarkToc from 'remark-toc';
-import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
+import { defineConfig } from 'astro/config'
+import remarkToc from 'remark-toc'
+import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
 
 export default {
   markdown: {
@@ -468,10 +476,12 @@ export default {
     // Preserves remark-gfm and remark-smartypants
     extendDefaultPlugins: true,
   },
-  integrations: [mdx({
-    // Applied to .mdx files only
-    rehypePlugins: [rehypeAccessibleEmojis],
-  })],
+  integrations: [
+    mdx({
+      // Applied to .mdx files only
+      rehypePlugins: [rehypeAccessibleEmojis],
+    }),
+  ],
 }
 ```
 
@@ -480,15 +490,148 @@ export default {
 - Astro comes with built-in support for Shiki and Prism. Shiki is the default.
 - Use built-in `<Code />` component to provide syntax highlighting to code fences.
 
-> *NOTE:* Importing json is supported by default but jsonc is not!
+> _NOTE:_ Importing json is supported by default but jsonc is not!
 
-> *NOTE:* Astro does NOT support fetching remote markdown!
+> _NOTE:_ Astro does NOT support fetching remote markdown!
 
 ## Routing
 
-- Astro uses *file-based routing*
+- Astro uses _file-based routing_
 
-### Static Routes
+### Dynamic Routes
+
+#### Static (SSG) Mode
+
+- Dynamic routes in static mode must export a `getStaticPaths()` function that returns `{params, props}[]`
+- Dynamic routes can contain multiple parameters
+
+```js
+---
+export function getStaticPaths () {
+ return [
+    {params: {lang: 'en', version: 'v1'}},
+    {params: {lang: 'fr', version: 'v2'}},
+  ];
+}
+
+const { lang, version } = Astro.params;
+---
+...
+```
+
+#### Rest parameter in Dynamic Routes
+
+```js
+// src/pages/sequences/[...path].astro
+---
+export function getStaticPaths() {
+  return [
+    {params: {path: 'one/two/three'}},
+    {params: {path: 'four'}},
+    {params: {path: undefined }}
+  ]
+}
+
+const { path } = Astro.params;
+---
+...
+// matches `/sequences/one/two/three`, `/sequences/four`, and `/sequences`
+```
+
+### Server (SSR) Mode
+
+- Do not use `getStaticPaths()` in SSR mode
+
+### Route Priority Order
+
+- Static routes with path parameters > named parameters > rest parameters
+- Ties are sorted alphabetically
+
+### Pagination
+
+```js
+---
+export async function getStaticPaths({ paginate }) {
+  const astronautPages = [{
+    astronaut: 'Neil Armstrong',
+  }, {
+    astronaut: 'Buzz Aldrin',
+  }, {
+    astronaut: 'Sally Ride',
+  }, {
+    astronaut: 'John Glenn',
+  }];
+  // Generate pages from our array of astronauts, with 2 to a page
+  return paginate(astronautPages, { pageSize: 2 });
+}
+// All paginated data is passed on the "page" prop
+const { page } = Astro.props;
+---
+
+<!--Display the current page number. Astro.params.page can also be used!-->
+<h1>Page {page.currentPage}</h1>
+<ul>
+  <!--List the array of astronaut info-->
+  {page.data.map(({ astronaut }) => <li>{astronaut}</li>)}
+</ul>
+```
+
+#### Page Interface
+
+```ts
+interface Page<T = any> {
+  /** result */
+  data: T[]
+  /** metadata */
+  /** the count of the first item on the page, starting from 0 */
+  start: number
+  /** the count of the last item on the page, starting from 0 */
+  end: number
+  /** total number of results */
+  total: number
+  /** the current page number, starting from 1 */
+  currentPage: number
+  /** number of items per page (default: 25) */
+  size: number
+  /** number of last page */
+  lastPage: number
+  url: {
+    /** url of the current page */
+    current: string
+    /** url of the previous page (if there is one) */
+    prev: string | undefined
+    /** url of the next page (if there is one) */
+    next: string | undefined
+  }
+}
+```
+
+##### Nested Pagination Example
+
+```js
+// src/pages/[tag]/[page].astro
+---
+export async function getStaticPaths({ paginate }) {
+  const allTags = ['red', 'blue', 'green'];
+  const allPosts = await Astro.glob('../../posts/*.md');
+  // For every tag, return a paginate() result.
+  // Make sure that you pass `{params: {tag}}` to `paginate()`
+  // so that Astro knows which tag grouping the result is for.
+  return allTags.map((tag) => {
+    const filteredPosts = allPosts.filter((post) => post.frontmatter.tag === tag);
+    return paginate(filteredPosts, {
+      params: { tag },
+      pageSize: 10
+    });
+  });
+}
+const { page } = Astro.props;
+const params = Astro.params;
+```
+
+### Excluding pages
+
+- prefix files/directories with `_page/_directory` to exclude them from being built
 
 ## Imports
 
