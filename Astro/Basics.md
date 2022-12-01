@@ -21,7 +21,7 @@
     - [Client-Side Scripts](#client-side-scripts)
   - [Pages](#pages)
   - [Layouts](#layouts)
-  - [Markdown \& MDX](#markdown--mdx)
+  - [Markdown And MDX](#markdown-and-mdx)
   - [Routing](#routing)
   - [Imports](#imports)
   - [Endpoints](#endpoints)
@@ -202,7 +202,92 @@ const { greeting = "Hello", name } = Astro.props;
 
 ## Layouts
 
-## Markdown & MDX
+- [[Layouts]] are [[Astro components]] used to provide a reusable UI structure
+- A typical "layout" component provides
+    1. a page shell (`<html>`, `<head>`, `<body>` tags)
+    2. a `<slot />` to specify where individual page content should be injected
+- By convention, layout components live in `src/layouts`
+- Markdown and MDX pages can use layout component via `layout` frontmatter property
+
+```js
+---
+layout: ../layouts/BaseLayout.astro
+title: "Hello, World!"
+author: "Matthew Phillips"
+date: "09 Aug 2022"
+---
+All frontmatter properties are available as props to an Astro layout component.
+
+The `layout` property is the only special one provided by Astro.
+
+You can use it in both Markdown and MDX files located within `src/pages/`.
+```
+
+- Use `MarkdownLayoutProps` or `MDXLayoutProps` TS utility types to type incoming frontmatter props
+
+```ts
+---
+import type { MarkdownLayoutProps } from 'astro';
+
+type Props = MarkdownLayoutProps<{
+  // Define frontmatter props here
+  title: string;
+  author: string;
+  date: string;
+}>;
+
+// Now, `frontmatter`, `url`, and other Markdown layout properties
+// are accessible with type safety
+const { frontmatter, url } = Astro.props;
+---
+<html>
+  <head>
+    <meta rel="canonical" href={new URL(url, Astro.site).pathname}>
+    <title>{frontmatter.title}</title>
+  </head>
+  <body>
+    <h1>{frontmatter.title} by {frontmatter.author}</h1>
+    <slot />
+    <p>Written on: {frontmatter.date}</p>
+  </body>
+</html>
+```
+
+- Markdown/MDX layout components have the following on `Astro.props`
+  - `file` - Absolute path of md/mdx file
+  - `url` - Url of page - if it's a page 🙂
+  - `frontmatter` - all frontmatter properties
+  - `headings` - all `h1` to `h6` headings
+    - `type Heading = { depth: number, slug: string, text: string }`
+  - (MD only) `rawContent()` and `compiledContext()` functions
+
+> *NOTE:* `export` statements in MDX are not available on `Astro.props`
+
+- MDX files allow for manual importing of Layout components. Allows `Astro.props` to store functions to be used within the layout component
+
+```js
+---
+layout: ../../layouts/BaseLayout.astro
+title: 'My first MDX post'
+publishDate: '21 September 2022'
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+function fancyJsHelper() {
+  return "Try doing that with YAML!";
+}
+
+<BaseLayout title={frontmatter.title} fancyJsHelper={fancyJsHelper}>
+  Welcome to my new Astro blog, using MDX!
+</BaseLayout>
+```
+
+> *TIP:* Conditional destructing is a thing:
+
+```js
+const { title } = Astro.props.frontmatter || Astro.props;
+```
+## Markdown And MDX
 
 ## Routing
 
