@@ -20,9 +20,21 @@
     - [CSS Styles](#css-styles)
     - [Client-Side Scripts](#client-side-scripts)
   - [Pages](#pages)
+    - [Custom 404 Error Page](#custom-404-error-page)
   - [Layouts](#layouts)
+    - [MD/MDX `layout` frontmatter property](#mdmdx-layout-frontmatter-property)
+    - [Markdown/MDX layout components `Astro.props`](#markdownmdx-layout-components-astroprops)
+    - [Manual importing of Layout components](#manual-importing-of-layout-components)
   - [Markdown And MDX](#markdown-and-mdx)
+    - [Draft Frontmatter Property](#draft-frontmatter-property)
+    - [MD/MDX Heading anchors](#mdmdx-heading-anchors)
+    - [MDX Features](#mdx-features)
+    - [Importing MD/MDX files into Astro components](#importing-mdmdx-files-into-astro-components)
+    - [MD/MDX Content Component](#mdmdx-content-component)
+    - [Dynamic Page Routing on MD/MDX files](#dynamic-page-routing-on-mdmdx-files)
+    - [Syntax Highlighting](#syntax-highlighting)
   - [Routing](#routing)
+    - [Static Routes](#static-routes)
   - [Imports](#imports)
   - [Endpoints](#endpoints)
   - [Data Fetching](#data-fetching)
@@ -107,7 +119,7 @@ const name = "Astro";
 </div>
 ```
 
->**Caution**: Interpolated HTML attributes in Astro components will be converted to strings (i.e. cannot pass functions or objects to HTML element attributes)
+> *WARNING*: Interpolated HTML attributes in Astro components will be converted to strings (i.e. cannot pass functions or objects to HTML element attributes)
 
 - For example, the example below won't work!
 
@@ -198,7 +210,10 @@ const { greeting = "Hello", name } = Astro.props;
 ## Pages
 
 - [[Pages]] are files that live in the `src/pages/` directory. The are responsible for handling routing, data loading, and overall page layout
-- Custom 404 Error Page: `404.astro` or `404.md` within `/src/pages/`
+
+### Custom 404 Error Page
+
+- `404.astro` or `404.md` within `/src/pages/`
 
 ## Layouts
 
@@ -207,6 +222,9 @@ const { greeting = "Hello", name } = Astro.props;
     1. a page shell (`<html>`, `<head>`, `<body>` tags)
     2. a `<slot />` to specify where individual page content should be injected
 - By convention, layout components live in `src/layouts`
+
+### MD/MDX `layout` frontmatter property
+
 - Markdown and MDX pages can use layout component via `layout` frontmatter property
 
 ```js
@@ -221,6 +239,12 @@ All frontmatter properties are available as props to an Astro layout component.
 The `layout` property is the only special one provided by Astro.
 
 You can use it in both Markdown and MDX files located within `src/pages/`.
+```
+
+> *TIP:* Wrap `layout` path in quotes to enable file path aliases
+
+```js
+layout: "@layouts/MarkdownPostLayout.astro"
 ```
 
 - Use `MarkdownLayoutProps` or `MDXLayoutProps` TS utility types to type incoming frontmatter props
@@ -253,17 +277,20 @@ const { frontmatter, url } = Astro.props;
 </html>
 ```
 
-- Markdown/MDX layout components have the following on `Astro.props`
-  - `file` - Absolute path of md/mdx file
-  - `url` - Url of page - if it's a page 🙂
-  - `frontmatter` - all frontmatter properties
-  - `headings` - all `h1` to `h6` headings
-    - `type Heading = { depth: number, slug: string, text: string }`
-  - (MD only) `rawContent()` and `compiledContext()` functions
+### Markdown/MDX layout components `Astro.props`
 
-> *NOTE:* `export` statements in MDX are not available on `Astro.props`
+- `file` - Absolute path of md/mdx file
+- `url` - Url of page - if it's a page 🙂
+- `frontmatter` - all frontmatter properties
+- `headings` - all `h1` to `h6` headings
+- `type Heading = { depth: number, slug: string, text: string }`
+- (MD only) `rawContent()` and `compiledContext()` functions
 
-- MDX files allow for manual importing of Layout components. Allows `Astro.props` to store functions to be used within the layout component
+> *NOTE:* `export` statements in MDX are not available on `Astro.props` for Layout components
+
+### Manual importing of Layout components
+
+- Allows `Astro.props` to store functions to be used within the layout component
 
 ```js
 ---
@@ -287,9 +314,181 @@ function fancyJsHelper() {
 ```js
 const { title } = Astro.props.frontmatter || Astro.props;
 ```
+
 ## Markdown And MDX
 
+### Draft Frontmatter Property
+
+- MD/MDX pages can be marked as `unpublished` via the optional `draft` frontmatter property
+  - `draft: true` will result in:
+    - page exclude from the site build
+    - page will be returned by `Astro.glob()` invocations
+
+> *TIP:* Filter out draft md/mdx pages using JavaScript
+
+```js
+const posts = await Astro.glob('../pages/post/*.md');
+const nonDraftPosts = posts.filter((post) => !post.frontmatter.draft);
+```
+
+### MD/MDX Heading anchors
+
+- MD/MDX Headings can be used to directly link to specific sections of a page
+
+```js
+---
+title: My page of content
+---
+## Introduction
+
+I can link internally to [my conclusion](#conclusion) on the same page when writing Markdown.
+
+## Conclusion
+
+I can use the URL `https://my-domain.com/page-1/#introduction` to navigate directly to my Introduction on the page. 
+```
+
+### MDX Features
+
+- MDX integration allows for JS variables, expressions, and components to be used in mdx file
+- MDX files have access to any `export` named properties, frontmatter properties, and imported Astro/UI-framework components
+- MDX syntax can be mapped to custom components 
+  - e.g. `# Heading => <MyCustomHeadingComponent/>`
+  - Don't forget to use `<slot/>` within the custom component!
+
+```js
+import Blockquote from '../components/Blockquote.astro';
+export const components = {blockquote: Blockquote}
+
+> This quote will be a custom Blockquote
+```
+
+```js
+---
+const props = Astro.props;
+---
+<blockquote {...props} class="bg-blue-50 p-4">
+  <span class="text-4xl text-blue-600 mb-2">“</span>
+  <slot /> <!-- Be sure to add a `<slot/>` for child content! -->
+</blockquote>
+```
+
+### Importing MD/MDX files into Astro components
+
+- MD/MDX files can be individual imported into `.astro` components or bulk imported via `Astro.glob`
+
+```js
+---
+import * as greatPost from '../pages/post/great-post.md';
+
+const posts = await Astro.glob('../pages/post/*.md');
+---
+```
+
+- How to optionally type imported frontmatter
+
+```js
+---
+interface Frontmatter {
+  title: string;
+  description?: string;
+}
+const posts = await Astro.glob<Frontmatter>('../pages/post/*.md');
+---
+```
+
+> *NOTE:* Astro "layout" components don't receive named exports from mdx files, whereas "non-layout" `.astro` components do receive named exports
+
+### MD/MDX Content Component
+
+- Import `{ Content }` to render MD/MDX content in importing component
+
+```js
+---
+import {Content as PromoBanner} from '../components/promoBanner.md';
+---
+
+<h2>Today's promo</h2>
+<PromoBanner />
+```
+
+- Passing custom components to MD/MDX `<Content />` component
+
+```js
+---
+import { Content, components } from '../content.mdx';
+import Heading from '../Heading.astro';
+---
+<!-- Creates a custom <h1> for the # syntax, _and_ applies any custom components defined in `content.mdx` -->
+<Content components={{...components, h1: Heading }} />
+```
+
+### Dynamic Page Routing on MD/MDX files
+
+- Dynamic page routing of md/mdx  files
+
+```js
+// src/pages/[slug].astro
+---
+export async function getStaticPaths() {
+  const posts = await Astro.glob('../posts/**/*.md')
+
+  return posts.map(post => ({
+    params: { 
+      slug: post.frontmatter.slug 
+    },
+    props: {
+      post
+    },
+  }))
+}
+
+const { Content } = Astro.props.post
+---
+<article>
+  <Content/>
+</article>
+```
+
+> *NOTE:* `remark` is used by Astro to parse md/mdx files using GitHub-flavored Markdown and Smartypants plugins by default
+
+- [[GitHub Flavored Markdown]] - This package is a unified (remark) plugin to enable the extensions to markdown that GitHub adds: autolink literals (www.x.com), footnotes ([^1]), strikethrough (~~stuff~~), tables (| cell |…), and tasklists (* [x]). You can use this plugin to add support for parsing and serializing them. These extensions by GitHub to CommonMark are called GFM (GitHub Flavored Markdown).
+
+- Extending MD/MDX parsing via plugins
+
+```js
+import { defineConfig } from 'astro/config';
+import remarkToc from 'remark-toc';
+import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
+
+export default {
+  markdown: {
+    // Applied to .md and .mdx files
+    remarkPlugins: [remarkToc],
+    // Preserves remark-gfm and remark-smartypants
+    extendDefaultPlugins: true,
+  },
+  integrations: [mdx({
+    // Applied to .mdx files only
+    rehypePlugins: [rehypeAccessibleEmojis],
+  })],
+}
+```
+
+### Syntax Highlighting
+
+- Astro comes with built-in support for Shiki and Prism. Shiki is the default.
+- Use built-in `<Code />` component to provide syntax highlighting to code fences.
+
+> *NOTE:* Importing json is supported by default but jsonc is not!
+
+> *NOTE:* Astro does NOT support fetching remote markdown!
+
 ## Routing
+
+- Astro uses *file-based routing*
+
+### Static Routes
 
 ## Imports
 
