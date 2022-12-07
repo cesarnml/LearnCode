@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Astro/Basics.md",
+                "file": "Svelte/Tutorial.md",
                 "mode": "source",
                 "backlinks": false,
                 "source": false
@@ -86,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Astro/Basics.md",
+                "file": "Svelte/Tutorial.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Astro/Basics.md",
+                "file": "Svelte/Tutorial.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -119,35 +119,26 @@
                 "useHierarchy": true
               }
             }
-          },
-          {
-            "id": "a7eb2489d5de6ab0",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "Astro/Basics.md"
-              }
-            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "active": "1db22d6c69c774d3",
   "lastOpenFiles": [
-    "GitHub Flavored Markdown.md",
     "Astro/Basics.md",
+    "Svelte/Tutorial.md",
+    "GitHub Flavored Markdown.md",
     "Astro components.md",
     "Astro/Blog.md",
     "Astro/CoreConcepts.md",
     "Astro/GettingStarted.md",
     "Server-first.md",
     "content-focused.md",
-    "Astro.md",
-    "2022-11-30.md"
+    "Astro.md"
   ]
 }
