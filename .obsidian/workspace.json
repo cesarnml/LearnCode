@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Svelte/Tutorial.md",
+                "file": "Astro/Basics.md",
                 "mode": "source",
                 "backlinks": false,
                 "source": false
@@ -86,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Svelte/Tutorial.md",
+                "file": "Astro/Basics.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Svelte/Tutorial.md",
+                "file": "Astro/Basics.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -130,8 +130,8 @@
   },
   "active": "1db22d6c69c774d3",
   "lastOpenFiles": [
-    "Astro/Basics.md",
     "Svelte/Tutorial.md",
+    "Astro/Basics.md",
     "GitHub Flavored Markdown.md",
     "Astro components.md",
     "Astro/Blog.md",
