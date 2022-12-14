@@ -187,7 +187,7 @@ const { greeting = "Hello", name } = Astro.props;
 
 #### Named Slots
 
-```js
+```jsx
 // Wrapper
 <div>
     <slot name="top"/>
@@ -235,7 +235,7 @@ const { greeting = "Hello", name } = Astro.props;
 
 - Markdown and MDX pages can use layout component via `layout` frontmatter property
 
-```js
+```jsx
 ---
 layout: ../layouts/BaseLayout.astro
 title: "Hello, World!"
